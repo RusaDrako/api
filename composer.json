@@ -1,0 +1,20 @@
+{
+    "name": "RusaDrako/telegram_api",
+    "description": "API Telegram",
+    "license": "MIT",
+    "authors": [
+        {
+			"name": "Petukhov Leonid",
+            "email": "rusadrako@yandex.ru"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "RusaDrako\\telegram_api\\": "src"
+        },
+        "files": [
+            "src/autoload.php"
+        ]
+    }
+}
