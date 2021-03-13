@@ -7,21 +7,15 @@ namespace RusaDrako\api;
  */
 trait _trait__error {
 
-	#
-	private $test            = false;
+	use _trait__test;
 
-
-
-	public function test($bool) {
-		$this->test = (bool) $bool;
-	}
-
-
-
-	/**/
+	/** Формируем результат ошибки
+	 * @param integer $num Номер ошибки
+	 * @param string $description Описание ошибки
+	 */
 	private function set_error($num, $description) {
 		if ($this->test) {
-			return $num;
+			return "error {$num}";
 		} else {
 			(new result())->error($num, $description);
 			exit;

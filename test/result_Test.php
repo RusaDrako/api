@@ -35,7 +35,7 @@ class result_Test extends TestCase {
 	/** Тестирование result */
 	public function test_data() {
 		$arr = ['test_1' => 'test_desc_1', 'test_2' => 'test_desc_2'];
-		$result = $this->_test_object->data($arr);
+		$result = $this->_test_object->result($arr);
 		$this->assertIsArray($result);
 		$this->assertArrayHasKey('ok', $result, 'Не содержит ключа ok');
 		$this->assertTrue($result['ok'], 'Значение ok отлично от контрольного');
@@ -65,4 +65,3 @@ class result_Test extends TestCase {
 
 /**/
 }
-

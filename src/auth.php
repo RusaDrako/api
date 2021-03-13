@@ -2,10 +2,6 @@
 
 namespace RusaDrako\api;
 
-
-
-
-
 /**
  * Аутентификация API
  * @version 1.0.0
@@ -18,9 +14,8 @@ class auth {
 
 
 
-	private $error            = null;
-	private $token_key        = null;
-	private $delta            = 0;
+	private $obj_result       = null;
+	private $obj_token        = null;
 	# Объект класса
 	private static $_object   = null;
 
@@ -34,11 +29,9 @@ class auth {
 
 
 	/** */
-	public function __construct($token_key, $delta = 600) {
-		$this->token_key = $token_key;
-		$this->delta = $delta;
-		$this->result = new result();
-		$this->obj_token = new token();
+	public function __construct($token_key) {
+		$this->obj_result = new result();
+		$this->obj_token = new token($token_key);
 	}
 
 
@@ -66,43 +59,14 @@ class auth {
 
 
 
-	/** */
-	public function set_token(token $token_obj) {
-		$this->obj_token = $token_obj;
-	}
-
-
-
-
-
-	/** Ошибка времени */
-	public function error() {
-		# Сообщение об ошибке
-		return $this->error;
-	}
-
-
-
-
-
-	/** Аутентификация
+	/** Аутентификация по токену
 	 * @param string $token_in Токен подключения
-	 * @param string $token_time Время формирования токена
-	 * @param string $id ID элемента (используем при формировании токена)
+	 * @param array ...$args Массив данных для формирования токена
 	 */
-	public function auth($token_in, $token_time, $id) {
-		if ($this->delta) {
-			# Запоминаем дату (в числовом виде)
-			$_dt_time = time();
-			# Вычисляем разницу во времени
-			$delta_time = strtotime($token_time) - $_dt_time;
-			# Модуль числа больше 600 - 10 минут
-			if ($this->delta < abs($delta_time)) {
-				return $this->set_error('102', 'AUTH: Ограничение токена по времени');
-			}
-		}
+	public function auth($token_in, ...$args) {
 		$this->obj_token->test($this->test);
-		$token_control = $this->obj_token->calculate($this->token_key, $token_time, $id);
+		# Генерируем токен
+		$token_control = $this->generate_token(...$args);
 		# Если токены не совпадают
 		if ($token_control != $token_in) {
 			# Ошибка совпадения токенов
@@ -114,10 +78,42 @@ class auth {
 
 
 
-	/** */
-	public function get_token(...$args) {
-		return $this->obj_token->calculate($this->token_key, ...$args);
+	/** Генерирует токен
+	 * @param array ...$args Массив данных для формирования токена
+	 */
+	public function generate_token(...$args) {
+		return $this->obj_token->generate(...$args);
 	}
+
+
+
+
+
+	/** Прописывает объект токена
+	 * @param object $token_obj Объект токена
+	 */
+	public function set_token(_int_token $token_obj) {
+		$this->obj_token = $token_obj;
+	}
+
+
+
+
+
+	/** Возвращает объект токена */
+	public function get_token() {
+		return $this->obj_token;
+	}
+
+
+
+
+
+	/** Возвращает объект результата */
+	public function get_result() {
+		return $this->obj_result;
+	}
+
 
 
 

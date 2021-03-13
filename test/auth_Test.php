@@ -13,27 +13,19 @@ require_once(__DIR__ . '/../src/autoload.php');
  */
 class auth_Test extends TestCase {
 	/** */
-	private $token_key = '0123456789ABCDEF';
-	private $time = null;
-	private $str_time = null;
-	private $add_data = 1;
-	private $delta = 300;
-	private $token = null;
+	private $token_key = 'key0123456789ABCDEF';
+	private $token = '0123456789ABCDEF';
 	/** Тестируемый объект */
 	private $_test_object = null;
-	private $_object_token = null;
 
 
 
 	/** Вызывается перед каждым запуском тестового метода */
 	protected function setUp() : void {
-		$this->time = time();
-		$this->str_time = date('Y-m-d H:i:s', $this->time);
-		$this->_test_object = new RD_Api_Auth($this->token_key, $this->delta);
+		$this->_test_object = new RD_Api_Auth($this->token_key);
 		$this->_test_object->test(true);
-		$this->_object_token = new RD_Api_Token();
-		$this->_object_token->test(true);
-		$this->token = $this->_object_token->calculate($this->token_key, $this->str_time, $this->add_data);
+		$token_obj = $this->stub_token();
+		$this->_test_object->set_token($this->stub_token());
 	}
 
 
@@ -43,10 +35,41 @@ class auth_Test extends TestCase {
 
 
 
+	/** Генератор заглушки токена */
+	public function stub_token() {
+		// Создать заглушку для класса SomeClass.
+		$stub = $this->createMock(RD_Api_Token::class);
+		// Настроить заглушку.
+		$stub->method('generate')
+			->willReturn('0123456789ABCDEF');
+		return $stub;
+	}
+
+
+
+	/** Генератор реального токена */
+	public function real_token($obj_parent) {
+		$obj = new RD_Api_Token($this->token_key);
+		$obj_parent->set_token($obj);
+	}
+
+
+
+	/** Генератор токена */
+	public function test_get_token() {
+		$this->real_token($this->_test_object);
+		$result = $this->_test_object->get_token();
+		$this->assertIsObject($result);
+		$this->assertEquals(
+			\get_class($result), 'RusaDrako\api\token', 'Проверить функции set_token и get_token');
+	}
+
+
+
 	/** Контроль токена прошёл */
 	public function test_ok() {
 		$this->assertTrue(
-			$this->_test_object->auth($this->token, $this->str_time, $this->add_data), 'Контроль токена прошёл');
+			$this->_test_object->auth($this->token), 'Контроль токена прошёл');
 	}
 
 
@@ -54,55 +77,25 @@ class auth_Test extends TestCase {
 	/** Контроль токена не прошёл */
 	public function test_token_not_equals_101() {
 		$this->assertEquals(
-			$this->_test_object->auth($this->token . 1, $this->str_time, $this->add_data), '101', 'Контроль токена не прошёл');
+			$this->_test_object->auth($this->token . 1), 'error 101', 'Контроль токена не прошёл');
 	}
 
 
 
-	/** Контроль времени - ОК = + (delta - 10) */
-	public function test_time_plus_delta() {
-		# Контрольная дата
-		$str_time = date('Y-m-d H:i:s', $this->time + ($this->delta - 10));
-		# Новый токен
-		$this->token = $this->_object_token->calculate($this->token_key, $str_time, $this->add_data);
-		$this->assertTrue(
-			$this->_test_object->auth($this->token, $str_time, $this->add_data), 'Контроль времени - ОК = + (delta - 10)');
-	}
-
-
-
-	/** Контроль времени прошёл - ОК = - (delta - 10) */
-	public function test_time_minus_delta() {
-		# Контрольная дата
-		$str_time = date('Y-m-d H:i:s', $this->time - ($this->delta - 10));
-		# Новый токен
-		$this->token = $this->_object_token->calculate($this->token_key, $str_time, $this->add_data);
-		$this->assertTrue(
-			$this->_test_object->auth($this->token, $str_time, $this->add_data), 'Контроль времени прошёл - ОК = - (delta - 10)');
-	}
-
-
-
-	/** Контроль времени не прошёл - Error = - (delta + 10) */
-	public function test_time_plus_delta_102() {
-		# Контрольная дата
-		$str_time = date('Y-m-d H:i:s', $this->time + ($this->delta + 100));
-		# Новый токен
-		$this->token = $this->_object_token->calculate($this->token_key, $str_time, $this->add_data);
+	/** Генератор токена */
+	public function test_generate_token() {
 		$this->assertEquals(
-			$this->_test_object->auth($this->token, $str_time, $this->add_data), '102', 'Контроль времени не прошёл - Error = - (delta + 10)');
+			$this->_test_object->generate_token(), $this->token, 'Возвращает неправильный токен');
 	}
 
 
 
-	/** Контроль времени не прошёл - Error = - (delta - 10) */
-	public function test_time_minus_delta_102() {
-		# Контрольная дата
-		$str_time = date('Y-m-d H:i:s', $this->time - ($this->delta + 100));
-		# Новый токен
-		$this->token = $this->_object_token->calculate($this->token_key, $str_time, $this->add_data);
+	/** Генератор токена */
+	public function test_get_result() {
+		$result = $this->_test_object->get_result();
+		$this->assertIsObject($result);
 		$this->assertEquals(
-			$this->_test_object->auth($this->token, $str_time, $this->add_data), '102', 'Контроль времени не прошёл - Error = - (delta - 10)');
+			\get_class($result), 'RusaDrako\api\result');
 	}
 
 

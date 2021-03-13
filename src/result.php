@@ -2,10 +2,6 @@
 
 namespace RusaDrako\api;
 
-
-
-
-
 /**
  * Вывод данных для API
  * @version 1.0.0
@@ -14,17 +10,17 @@ namespace RusaDrako\api;
  */
 class result {
 
-	use _trait__error;
+	use _trait__test;
 
 
 
-	#
+	# Статус запроса
 	private $ok = true;
-	#
+	# Результат запроса
 	private $result = null;
-	#
+	# Номер ошибки
 	private $error_num = null;
-	#
+	# Описание ошибки
 	private $error_descript = null;
 	# Объект класса
 	private static $_object = null;
@@ -66,21 +62,24 @@ class result {
 
 
 
-	/** Ошибка времени */
-	public function error($num, $descript = null) {
+	/** Формирует результат ошибки
+	 * @param integer $num Номер ошибки
+	 * @param string $description Описание ошибки
+ 	*/
+	public function error($num, $description) {
 		$this->error_num = $num;
-		$this->error_description = $descript;
-		return $this->_result();
+		$this->error_description = $description;
+		return $this->_generate();
 	}
 
 
 
 
 
-	/** */
-	public function data($result) {
+	/** Формирует результат ответа */
+	public function result($result) {
 		$this->result = $result;
-		return $this->_result();
+		return $this->_generate();
 	}
 
 
@@ -88,7 +87,7 @@ class result {
 
 
 	/** Выводит результат запроса */
-	private function _result() {
+	private function _generate() {
 		if ($this->error_num) {
 			$result = [
 				'ok' => false,
@@ -109,15 +108,6 @@ class result {
 			exit;
 		}
 	}
-
-
-
-
-
-	/**/
-	private function set_error($num, $description) {}
-
-
 
 
 
