@@ -89,22 +89,24 @@ class result {
 	/** Выводит результат запроса */
 	private function _generate() {
 		if ($this->error_num) {
-			$result = [
+			$_result = [
 				'ok' => false,
 				'result' => null,
 				'error' => $this->error_num,
 				'error_desc' => $this->error_description,
 			];
 		} else {
-			$result = [
+			$_result = [
 				'ok' => true,
 				'result' => $this->result,
 			];
 		}
+		# JSON_PARTIAL_OUTPUT_ON_ERROR - Обработка рекурсивных объектов
+		$result = \json_encode($_result, JSON_PARTIAL_OUTPUT_ON_ERROR);
 		if ($this->test) {
 			return $result;
 		} else {
-			echo \json_encode($result);
+			echo $result;
 			exit;
 		}
 	}
