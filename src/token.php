@@ -10,8 +10,6 @@ namespace RusaDrako\api;
  */
 class token implements _int_token {
 
-	use _trait__error;
-
 
 
 	/** Ключ токена */
@@ -49,18 +47,17 @@ class token implements _int_token {
 	public function generate(...$args) {
 		# Если не передали time
 		if (!$args[0]) {
-			return $this->set_error('201', 'AUTH: Временная точка не найдена');
+			throw new auth_exception("AUTH: Временная точка не найдена", 201);
 		}
 		# Вычисляем разницу во времени
 		$delta_time = strtotime($args[0]) - time();
 		# Проверка отклонения времени
 		if ($this->delta_time < abs($delta_time)) {
-			return $this->set_error('202', 'AUTH: Ограничение токена по времени');
+			throw new auth_exception("AUTH: Ограничение токена по времени", 202);
 		}
 		# Если не передали ID
 		if (!$args[1]) {
-			# Ошибка переданных данных
-			return $this->set_error('203', 'AUTH: Контрольное значение не передано');
+			throw new auth_exception("AUTH: Контрольное значение не передано", 203);
 		}
 		$token_control = $this->calculate(...$args);
 		# Ставим маркер подключения

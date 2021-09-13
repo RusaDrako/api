@@ -10,8 +10,6 @@ namespace RusaDrako\api;
  */
 class auth {
 
-	use _trait__error;
-
 
 
 	private $obj_result       = null;
@@ -39,7 +37,7 @@ class auth {
 
 
 	/** */
-    public function __destruct() {}
+	public function __destruct() {}
 
 
 
@@ -64,13 +62,11 @@ class auth {
 	 * @param array ...$args Массив данных для формирования токена
 	 */
 	public function auth($token_in, ...$args) {
-		$this->obj_token->test($this->test);
 		# Генерируем токен
 		$token_control = $this->generate_token(...$args);
 		# Если токены не совпадают
 		if ($token_control != $token_in) {
-			# Ошибка совпадения токенов
-			return $this->set_error('101', 'AUTH: Ошибка токена');
+			throw new auth_exception("AUTH: Ошибка токена", 101);
 		}/**/
 		# Ставим маркер подключения
 		return true;
