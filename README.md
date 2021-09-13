@@ -8,6 +8,8 @@
 Для подключения библиотеки к проекту подключите файл `src/autoload.php`
 
 ```php
+	require_once('src/autoload.php');
+
 	# Уникальный ключ соединения
 	$key = '0123456789ABCDEF';
 	# Входящий токен
@@ -22,7 +24,12 @@
 	# Активация объекта
 	RD_Api_Auth::call($key);
 	# Проверка аутентификации
-	$result = RD_Api_Auth::call()->auth($token, ...$token_data);
+	try {
+		RD_Api_Auth::call()->auth($token, ...$token_data);
+	} catch (\RD_Api_Exception $e) {
+		$result_obj = RD_Api_Auth::call()->get_result()
+		$result_obj->error($e->getCode, $e->getMessage());
+	}
 ```
 
 
@@ -109,13 +116,13 @@
 ## Получить объект вывода результата
 
 ```php
-	$result = $api->get_result();
+	$result_obj = $api->get_result();
 ```
 
 или
 
 ```php
-	$result = RD_Api_Auth::call()->get_result();
+	$result_obj = RD_Api_Auth::call()->get_result();
 ```
 
 Возвращает объект вывода результата.
@@ -125,11 +132,19 @@
 
 Результат с данными
 
+```php
+	$result_obj->result("<Любые данные результата>");
+```
+
 ```json
 	{"ok":true,"result":"<Любые данные результата>"}
 ```
 
 Результат с ошибкой
+
+```php
+	$result_obj->error("<номер ошибки>", "<Описание ошибки>");
+```
 
 ```json
 	{"ok":false,"result":null,"error":"<номер ошибки>","error_desc":"<Описание ошибки>"}
