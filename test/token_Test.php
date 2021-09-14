@@ -59,16 +59,11 @@ class token_Test extends TestCase {
 	/** Ошибка передачи пустого ключа */
 	public function test_not_key_201() {
 		$e = false;
-		try {
-			$this->_test_object->generate(null, $this->add_data);
-		} catch (\Exception $e) {}
 
-		$this->assertTrue(is_object($e), 'Объект ошибки не найден: Ошибка передачи пустого времени');
-		$this->assertTrue(is_a($e, 'RusaDrako\\api\\auth_exception'), 'Объект ошибки неправильный');
-
-		$str_err = "AUTH: Временная точка не найдена";
-		$this->assertEquals(substr($e->getMessage(), 0, strlen($str_err)), $str_err, 'Неверное сообщение об ишибке');
-		$this->assertEquals($e->getCode(), 201, 'Неверный код ошибки');
+		$this->expectException('RusaDrako\api\auth_exception');
+		$this->expectExceptionCode(201);
+		$this->expectExceptionMessage('AUTH: Временная точка не найдена');
+		$this->_test_object->generate(null, $this->add_data);
 	}
 
 
@@ -77,17 +72,10 @@ class token_Test extends TestCase {
 	public function test_not_data_203() {
 		$token = $this->get_token($this->time, $this->add_data);
 
-		$e = false;
-		try {
-			$this->_test_object->generate($this->str_time, null);
-		} catch (\Exception $e) {}
-
-		$this->assertTrue(is_object($e), 'Объект ошибки не найден: Ошибка передачи пустого дополнительных данных');
-		$this->assertTrue(is_a($e, 'RusaDrako\\api\\auth_exception'), 'Объект ошибки неправильный');
-
-		$str_err = "AUTH: Контрольное значение не перед";
-		$this->assertEquals(substr($e->getMessage(), 0, strlen($str_err)), $str_err, 'Неверное сообщение об ишибке');
-		$this->assertEquals($e->getCode(), 203, 'Неверный код ошибки');
+		$this->expectException('RusaDrako\api\auth_exception');
+		$this->expectExceptionCode(203);
+		$this->expectExceptionMessage('AUTH: Контрольное значение не перед');
+		$this->_test_object->generate($this->str_time, null);
 	}
 
 
@@ -119,17 +107,10 @@ class token_Test extends TestCase {
 		$str_time = date('Y-m-d H:i:s', $time);
 		$token = $this->get_token($time, $this->add_data);
 
-		$e = false;
-		try {
-			$this->_test_object->generate($str_time, $this->add_data);
-		} catch (\Exception $e) {}
-
-		$this->assertTrue(is_object($e), 'Объект ошибки не найден: Контроль времени - Error = - (delta + 10)');
-		$this->assertTrue(is_a($e, 'RusaDrako\\api\\auth_exception'), 'Объект ошибки неправильный');
-
-		$str_err = "AUTH: Ограничение токена по времени";
-		$this->assertEquals(substr($e->getMessage(), 0, strlen($str_err)), $str_err, 'Неверное сообщение об ишибке');
-		$this->assertEquals($e->getCode(), 202, 'Неверный код ошибки');
+		$this->expectException('RusaDrako\api\auth_exception');
+		$this->expectExceptionCode(202);
+		$this->expectExceptionMessage('AUTH: Ограничение токена по времени');
+		$this->_test_object->generate($str_time, $this->add_data);
 	}
 
 
@@ -140,17 +121,10 @@ class token_Test extends TestCase {
 		$str_time = date('Y-m-d H:i:s', $time);
 		$token = $this->get_token($time, $this->add_data);
 
-		$e = false;
-		try {
-			$this->_test_object->generate($str_time, $this->add_data);
-		} catch (\Exception $e) {}
-
-		$this->assertTrue(is_object($e), 'Объект ошибки не найден: Контроль времени - Error = + (delta + 10)');
-		$this->assertTrue(is_a($e, 'RusaDrako\\api\\auth_exception'), 'Объект ошибки неправильный');
-
-		$str_err = "AUTH: Ограничение токена по времени";
-		$this->assertEquals(substr($e->getMessage(), 0, strlen($str_err)), $str_err, 'Неверное сообщение об ишибке');
-		$this->assertEquals($e->getCode(), 202, 'Неверный код ошибки');
+		$this->expectException('RusaDrako\api\auth_exception');
+		$this->expectExceptionCode(202);
+		$this->expectExceptionMessage('AUTH: Ограничение токена по времени');
+		$this->_test_object->generate($str_time, $this->add_data);
 	}
 
 

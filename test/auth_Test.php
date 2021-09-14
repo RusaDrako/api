@@ -73,17 +73,10 @@ class auth_Test extends TestCase {
 
 	/** Контроль токена не прошёл */
 	public function test_token_not_equals_101() {
-		$e = false;
-		try {
-			$this->_test_object->auth($this->token . 1);
-		} catch (\Exception $e) {}
-
-		$this->assertTrue(is_object($e), 'Объект ошибки не найден: Ошибка передачи пустого времени');
-		$this->assertTrue(is_a($e, 'RusaDrako\\api\\auth_exception'), 'Объект ошибки неправильный');
-
-		$str_err = "AUTH: Ошибка токена";
-		$this->assertEquals(substr($e->getMessage(), 0, strlen($str_err)), $str_err, 'Неверное сообщение об ишибке');
-		$this->assertEquals($e->getCode(), 101, 'Неверный код ошибки');
+		$this->expectException('RusaDrako\api\auth_exception');
+		$this->expectExceptionCode(101);
+		$this->expectExceptionMessage('AUTH: Ошибка токена');
+		$this->_test_object->auth($this->token . 1);
 	}
 
 
