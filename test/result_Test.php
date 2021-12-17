@@ -43,8 +43,16 @@ class result_Test extends TestCase {
 
 	/** Тестирование error */
 	public function test_error() {
-		$result = $this->_test_object->error('1', 'Тест');
+		$result = $this->_test_object->error(1, 'Тест');
 		$this->assertEquals($result, '{"ok":false,"result":null,"error":"1","error_desc":"\u0422\u0435\u0441\u0442"}');
+	}
+
+
+
+	/** Тестирование error */
+	public function test_error_0() {
+		$result = $this->_test_object->error(0, 'Тест');
+		$this->assertEquals($result, '{"ok":false,"result":null,"error":"-999999","error_desc":"\u0422\u0435\u0441\u0442"}');
 	}
 
 

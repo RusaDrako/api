@@ -67,6 +67,8 @@ class result {
 	 * @param string $description Описание ошибки
  	*/
 	public function error($num, $description) {
+		# Если код не передан, то ставим код по умолчанию
+		$num = (string) ($num ? $num : -999999);
 		$this->error_num = $num;
 		$this->error_description = $description;
 		return $this->_generate();
