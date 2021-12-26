@@ -13,6 +13,7 @@ $api = RD_Api_Auth::call($key);
 
 
 
+##### Корректные данные #####
 $token_data = [$str_time, $add_data];
 $obj_token = $api->get_token();
 echo $token = $obj_token->generate(...$token_data);
@@ -20,21 +21,38 @@ echo $token = $obj_token->generate(...$token_data);
 
 
 echo '<hr>';
-echo 'Полное совпадение';
+echo 'Корректные данные';
 echo '<br>';
-$result = $api->auth($token, ...$token_data);
-var_dump($result);
+try {
+	$result = $api->auth($token, ...$token_data);
+} catch (\RD_Api_Exception $e) {
+	echo "Генерируется ошибка RD_Api_Exception: <b>{$e->getCode()} {$e->getMessage()}</b>";
+	echo '<br>';
+//	var_dump($e);
+} finally {
+	echo 'Ошибка не должна была сгенерироваться';
+}
 
 
 
+
+
+##### Ошибочные данные #####
 $token_data = [$str_time, $add_data.'1'];
 echo '<hr>';
-echo 'Ошибка';
+echo 'Ошибочные данные';
 echo '<br>';
-$result = $api->auth($token, ...$token_data);
-var_dump($result);
+try {
+	$result = $api->auth($token, ...$token_data);
+} catch (\RD_Api_Exception $e) {
+	echo "Генерируется ошибка RD_Api_Exception: <b>{$e->getCode()} {$e->getMessage()}</b>";
+	echo '<br>';
+//	var_dump($e);
+} finally {
+	echo 'Ошибка должна была сгенерироваться';
+}
 
 
 
 echo '<hr>';
-echo 'А этот текст мы не выводим';
+echo 'Конец кода';
