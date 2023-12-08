@@ -11,8 +11,6 @@ $add_data = 'test';
 
 $api = new Auth($key);
 
-$api->get_result()->result(['key_1'=>'Текст 1','key_2'=>'Текст 2']);
-
 ##### Корректные данные #####
 $token_data = [$str_time, $add_data];
 $obj_token = $api->get_token();
@@ -52,4 +50,5 @@ try {
 
 echo '<hr>';
 echo '<hr>';
-echo 'Конец';
+
+$api->get_result()->result('Ок');
