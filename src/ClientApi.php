@@ -3,11 +3,11 @@
 namespace RusaDrako\api;
 
 /**
- * Аутентификация API
+ * Клиент API
  * @created 2020-06-01
  * @author Петухов Леонид <rusadrako@yandex.ru>
  */
-class Auth {
+class ClientApi {
 
 	private $obj_result;
 	private $obj_token;
@@ -30,7 +30,7 @@ class Auth {
 		$token_control = $this->generate_token(...$args);
 		# Если токены не совпадают
 		if ($token_control != $token_in) {
-			throw new ExceptionAuth("AUTH: Ошибка токена", 101);
+			throw new ExceptionClientApi("ClientApi: Ошибка токена", 101);
 		}/**/
 		# Ставим маркер подключения
 		return true;
@@ -66,4 +66,4 @@ class Auth {
 /**
  * Класс ошибки
  */
-class ExceptionAuth extends \Exception {}
+class ExceptionClientApi extends \Exception {}

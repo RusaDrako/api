@@ -32,17 +32,17 @@ class Token implements _int_token {
 	public function generate(...$args) {
 		# Если не передали time
 		if (!$args[0]) {
-			throw new ExceptionToken("AUTH: Временная точка не найдена", 201);
+			throw new ExceptionToken("ClientApi: Временная точка не найдена", 201);
 		}
 		# Вычисляем разницу во времени
 		$delta_time = strtotime($args[0]) - time();
 		# Проверка отклонения времени
 		if ($this->delta_time < abs($delta_time)) {
-			throw new ExceptionToken("AUTH: Ограничение токена по времени", 202);
+			throw new ExceptionToken("ClientApi: Ограничение токена по времени", 202);
 		}
 		# Если не передали ID
 		if (!$args[1]) {
-			throw new ExceptionToken("AUTH: Контрольное значение не передано", 203);
+			throw new ExceptionToken("ClientApi: Контрольное значение не передано", 203);
 		}
 		$token_control = $this->calculate(...$args);
 		# Ставим маркер подключения

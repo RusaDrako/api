@@ -23,46 +23,48 @@ require_once('/api/src/autoload.php')
 
 ## Аутентификация внешнего подключения
 ```php
-use RusaDrako\api\Auth;
-use RusaDrako\api\ExceptionAuth;
+use RusaDrako\api\ClientApi;
+use RusaDrako\api\ExceptionClientApi;
 use RusaDrako\api\ExceptionToken;
 
-require_once('src/autoload.php');
+# Уникальный ключ соединения
+$key = '0123456789ABCDEF';
+# Активация объекта
+$apiClient = new ClientApi($key);
 
 # Входящий токен
 $token = $_POST['token'];
-# Массив данных для проверки токена
+# Входящий массив данных для проверки токена
 $token_data = [
     $_POST['date'],
     $_POST['add_data'],
     ...
 ];
 
-# Активация объекта
-$apiClient = new Auth($key);
 try {
     # Проверка аутентификации
-    $apiClient->auth($token, ...$token_data);
-} catch (ExceptionAuth $e) {
-    # Ошибка аутентификации
+    $apiClient->ClientApi($token, ...$token_data);
+} catch (ExceptionClientApi $e) {
+    # Возвращаем ошибку аутентификации
     $apiClient->get_result()->error($e->getCode, $e->getMessage());
 } catch (ExceptionToken $e) {
-    # Ошибка генерации токена
+    # Возвращаем ошибку генерации токена
     $apiClient->get_result()->error($e->getCode, $e->getMessage());
 }
-# Возвращение результата
+# Возвращаем результата
 $apiClient->get_result()->result('Ок');
 ```
 
 
-## Класс Auth
+## Класс ClientApi
+Базовый клас для организации API
 ```php
-use RusaDrako\api\Auth;
+use RusaDrako\api\ClientApi;
 
 # Уникальный ключ соединения
 $key = '0123456789ABCDEF';
 
-$apiClient = new Auth($key);
+$apiClient = new ClientApi($key);
 ```
 
 #### Метод auth()

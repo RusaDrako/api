@@ -47,7 +47,7 @@ class Token_Test extends TestCase {
 
 		$this->expectException('RusaDrako\api\ExceptionToken');
 		$this->expectExceptionCode(201);
-		$this->expectExceptionMessage('AUTH: Временная точка не найдена');
+		$this->expectExceptionMessage('ClientApi: Временная точка не найдена');
 		$this->_test_object->generate(null, $this->add_data);
 	}
 
@@ -57,7 +57,7 @@ class Token_Test extends TestCase {
 
 		$this->expectException('RusaDrako\api\ExceptionToken');
 		$this->expectExceptionCode(203);
-		$this->expectExceptionMessage('AUTH: Контрольное значение не перед');
+		$this->expectExceptionMessage('ClientApi: Контрольное значение не перед');
 		$this->_test_object->generate($this->str_time, null);
 	}
 
@@ -86,7 +86,7 @@ class Token_Test extends TestCase {
 
 		$this->expectException('RusaDrako\api\ExceptionToken');
 		$this->expectExceptionCode(202);
-		$this->expectExceptionMessage('AUTH: Ограничение токена по времени');
+		$this->expectExceptionMessage('ClientApi: Ограничение токена по времени');
 		$this->_test_object->generate($str_time, $this->add_data);
 	}
 
@@ -98,7 +98,7 @@ class Token_Test extends TestCase {
 
 		$this->expectException('RusaDrako\api\ExceptionToken');
 		$this->expectExceptionCode(202);
-		$this->expectExceptionMessage('AUTH: Ограничение токена по времени');
+		$this->expectExceptionMessage('ClientApi: Ограничение токена по времени');
 		$this->_test_object->generate($str_time, $this->add_data);
 	}
 
