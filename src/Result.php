@@ -4,49 +4,29 @@ namespace RusaDrako\api;
 
 /**
  * Вывод данных для API
- * @version 1.0.0
  * @created 2020-06-01
  * @author Петухов Леонид <rusadrako@yandex.ru>
  */
-class result {
+class Result {
 
 	use _trait__test;
 
-
-
-	# Статус запроса
+	/** @var bool Статус запроса */
 	private $ok = true;
-	# Результат запроса
+	/** @var null Результат запроса */
 	private $result = null;
-	# Номер ошибки
+	/** @var null Номер ошибки */
 	private $error_num = null;
-	# Описание ошибки
+	/** @var null Описание ошибки */
 	private $error_descript = null;
-	# Объект класса
+	/** @var null Объект класса */
 	private static $_object = null;
-
-
-
-
-
-
-
-
-
 
 	/** */
 	public function __construct() {}
 
-
-
-
-
 	/** */
     public function __destruct() {}
-
-
-
-
 
 	/** Вызов объекта
 	* @return object Объект класса
@@ -57,10 +37,6 @@ class result {
 		}
 		return self::$_object;
 	}
-
-
-
-
 
 	/** Формирует результат ошибки
 	 * @param integer $num Номер ошибки
@@ -74,19 +50,11 @@ class result {
 		return $this->_generate();
 	}
 
-
-
-
-
 	/** Формирует результат ответа */
 	public function result($result) {
 		$this->result = $result;
 		return $this->_generate();
 	}
-
-
-
-
 
 	/** Выводит результат запроса */
 	private function _generate() {
@@ -112,8 +80,6 @@ class result {
 			exit;
 		}
 	}
-
-
 
 /**/
 }

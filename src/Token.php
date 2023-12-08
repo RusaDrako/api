@@ -4,22 +4,15 @@ namespace RusaDrako\api;
 
 /**
  * Формирование токена
- * @version 1.0.0
  * @created 2020-06-01
  * @author Петухов Леонид <rusadrako@yandex.ru>
  */
-class token implements _int_token {
-
-
+class Token implements _int_token {
 
 	/** Ключ токена */
 	protected $key = null;
 	/** +/- 10 минут на действие токена */
 	protected $delta_time = 600;
-
-
-
-
 
 	/** Генератор токена
 	 * @param array ...$args Произвольный массив данных для формирования токена
@@ -29,16 +22,8 @@ class token implements _int_token {
 		$this->result = new result();
 	}
 
-
-
-
-
 	/** */
 	public function __destruct() {}
-
-
-
-
 
 	/** Генератор токена
 	 * @param string $args[0] Время формирования токена
@@ -47,26 +32,22 @@ class token implements _int_token {
 	public function generate(...$args) {
 		# Если не передали time
 		if (!$args[0]) {
-			throw new auth_exception("AUTH: Временная точка не найдена", 201);
+			throw new ExceptionToken("AUTH: Временная точка не найдена", 201);
 		}
 		# Вычисляем разницу во времени
 		$delta_time = strtotime($args[0]) - time();
 		# Проверка отклонения времени
 		if ($this->delta_time < abs($delta_time)) {
-			throw new auth_exception("AUTH: Ограничение токена по времени", 202);
+			throw new ExceptionToken("AUTH: Ограничение токена по времени", 202);
 		}
 		# Если не передали ID
 		if (!$args[1]) {
-			throw new auth_exception("AUTH: Контрольное значение не передано", 203);
+			throw new ExceptionToken("AUTH: Контрольное значение не передано", 203);
 		}
 		$token_control = $this->calculate(...$args);
 		# Ставим маркер подключения
 		return $token_control;
 	}
-
-
-
-
 
 	/** Расчёт токена */
 	protected function calculate(...$args) {
@@ -80,9 +61,10 @@ class token implements _int_token {
 		return $token_control;
 	}
 
-
-
-
-
 /**/
 }
+
+/**
+ * Класс ошибки
+ */
+class ExceptionToken extends \Exception {}

@@ -4,27 +4,15 @@ namespace RusaDrako\api;
 
 /**
  * Аутентификация API
- * @version 1.0.0
  * @created 2020-06-01
  * @author Петухов Леонид <rusadrako@yandex.ru>
  */
-class auth {
-
-
+class Auth {
 
 	private $obj_result       = null;
 	private $obj_token        = null;
-	# Объект класса
+	/** @var null Объект класса */
 	private static $_object   = null;
-
-
-
-
-
-
-
-
-
 
 	/** */
 	public function __construct($token_key) {
@@ -32,16 +20,8 @@ class auth {
 		$this->obj_token = new token($token_key);
 	}
 
-
-
-
-
 	/** */
 	public function __destruct() {}
-
-
-
-
 
 	/** Вызов объекта
 	* @return object Объект класса
@@ -53,10 +33,6 @@ class auth {
 		return self::$_object;
 	}
 
-
-
-
-
 	/** Аутентификация по токену
 	 * @param string $token_in Токен подключения
 	 * @param array ...$args Массив данных для формирования токена
@@ -66,13 +42,11 @@ class auth {
 		$token_control = $this->generate_token(...$args);
 		# Если токены не совпадают
 		if ($token_control != $token_in) {
-			throw new auth_exception("AUTH: Ошибка токена", 101);
+			throw new ExceptionAuth("AUTH: Ошибка токена", 101);
 		}/**/
 		# Ставим маркер подключения
 		return true;
 	}
-
-
 
 	/** Генерирует токен
 	 * @param array ...$args Массив данных для формирования токена
@@ -81,10 +55,6 @@ class auth {
 		return $this->obj_token->generate(...$args);
 	}
 
-
-
-
-
 	/** Прописывает объект токена
 	 * @param object $token_obj Объект токена
 	 */
@@ -92,27 +62,20 @@ class auth {
 		$this->obj_token = $token_obj;
 	}
 
-
-
-
-
 	/** Возвращает объект токена */
 	public function get_token() {
 		return $this->obj_token;
 	}
-
-
-
-
 
 	/** Возвращает объект результата */
 	public function get_result() {
 		return $this->obj_result;
 	}
 
-
-
-
-
 /**/
 }
+
+/**
+ * Класс ошибки
+ */
+class ExceptionAuth extends \Exception {}

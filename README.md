@@ -8,56 +8,55 @@
 Для подключения библиотеки к проекту подключите файл `src/autoload.php`
 
 ```php
-	require_once('src/autoload.php');
+use RusaDrako\api\Auth;
+use RusaDrako\api\ExceptionAuth;
 
-	# Уникальный ключ соединения
-	$key = '0123456789ABCDEF';
-	# Входящий токен
-	$token = $_POST['token'];
-	# Массив данных для проверки токена используемый объектом `RD_Api_Token`
-	$token_data = [
-		$_POST['date'],
-		$_POST['add_data'],
-		...
-	];
+require_once('src/autoload.php');
 
-	# Активация объекта
-	RD_Api_Auth::call($key);
-	# Проверка аутентификации
-	try {
-		RD_Api_Auth::call()->auth($token, ...$token_data);
-	} catch (\RD_Api_Exception $e) {
-		$result_obj = RD_Api_Auth::call()->get_result()
-		$result_obj->error($e->getCode, $e->getMessage());
-	}
+# Уникальный ключ соединения
+$key = '0123456789ABCDEF';
+# Входящий токен
+$token = $_POST['token'];
+# Массив данных для проверки токена используемый объектом `RD_Api_Token`
+$token_data = [
+    $_POST['date'],
+    $_POST['add_data'],
+    ...
+];
+
+# Активация объекта
+Auth::call($key);
+# Проверка аутентификации
+try {
+    Auth::call()->auth($token, ...$token_data);
+} catch (ExceptionAuth $e) {
+    $result_obj = Auth::call()->get_result()
+    $result_obj->error($e->getCode, $e->getMessage());
+}
 ```
 
 
 ## Первый вызов объекта
-
 ```php
-	$api = new RD_Api_Auth($key);
+use RusaDrako\api\Auth;
+$api = new Auth($key);
 ```
 или
 ```php
-	RD_Api_Auth::call($key);
+use RusaDrako\api\Auth;
+Auth::call($key);
 ```
-
 - **$key** - уникальный ключ соединения
 
 
 ## Проверка токена
-
 ```php
-	$auth = $api->auth($token, ...$token_data);
+$auth = $api->auth($token, ...$token_data);
 ```
-
 или
-
 ```php
-	$auth = RD_Api_Auth::call()->auth($token, ...$token_data);
+$auth = RD_Api_Auth::call()->auth($token, ...$token_data);
 ```
-
 - **$token** - входящий токен
 - **...$token_data** - массив данных для проверки токена используемый объектом `RD_Api_Token`
 
@@ -65,87 +64,64 @@
 
 
 ## Генерация токена
-
+Возвращает `Токен` или прерывает выполнение скрипта и выводит json-сообщение об ошибке.
 ```php
-	$token = $api->generate_token(...$token_data);
+$token = $api->generate_token(...$token_data);
 ```
-
 или
-
 ```php
-	$token = RD_Api_Auth::call()->generate_token(...$token_data);
+$token = RD_Api_Auth::call()->generate_token(...$token_data);
 ```
-
 - **...$token_data** - массив данных для проверки токена используемый объектом `RD_Api_Token` (`RusaDrako\api\token`)
-
-Метод возвращает `Токен` или прерывает выполнение скрипта и выводит json-сообщение об ошибке.
 
 
 ## Задать новый объект генерации токена
-
+Задаёт новый объект генерации токена.
 ```php
-	$api->set_token($obj_token);
+$api->set_token($obj_token);
 ```
-
 или
-
 ```php
 	RD_Api_Auth::call()->set_token($obj_token);
 ```
-
 - **$obj_token** - объект генерации токена. Объект должен использовать интерфейс `RD_Api_Int_Token` (`RusaDrako\api\_int_token`)
-
-Задаёт новый объект генерации токена.
 
 
 ## Получить объект генерации токена
-
-```php
-	$obj_token = $api->get_token();
-```
-
-или
-
-```php
-	$obj_token = RD_Api_Auth::call()->get_token();
-```
-
 Возвращает объект генерации токена.
+```php
+$obj_token = $api->get_token();
+```
+или
+```php
+$obj_token = RD_Api_Auth::call()->get_token();
+```
 
 
 ## Получить объект вывода результата
-
-```php
-	$result_obj = $api->get_result();
-```
-
-или
-
-```php
-	$result_obj = RD_Api_Auth::call()->get_result();
-```
-
 Возвращает объект вывода результата.
+```php
+$result_obj = $api->get_result();
+```
+или
+```php
+$result_obj = RD_Api_Auth::call()->get_result();
+```
 
 
 ## Результат
-
-Результат с данными
-
+Пример результат с данными:
 ```php
-	$result_obj->result("<Любые данные результата>");
+$result_obj->result("<Любые данные результата>");
 ```
-
 ```json
-	{"ok":true,"result":"<Любые данные результата>"}
+{"ok":true,"result":"<Любые данные результата>"}
 ```
 
-Результат с ошибкой
-
+Пример результата с ошибкой:
 ```php
-	$result_obj->error("<номер ошибки>", "<Описание ошибки>");
+$result_obj->error("<Код ошибки>", "<Описание ошибки>");
 ```
-
 ```json
-	{"ok":false,"result":null,"error":"<номер ошибки>","error_desc":"<Описание ошибки>"}
+{"ok":false,"result":null,"error":"<Код ошибки>","error_desc":"<Описание ошибки>"}
 ```
