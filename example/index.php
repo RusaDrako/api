@@ -9,7 +9,9 @@ $time = time();
 $str_time = date('Y-m-d H:i:s', $time);
 $add_data = 'test';
 
-$api = Auth::call($key);
+$api = new Auth($key);
+
+$api->get_result()->result(['key_1'=>'Текст 1','key_2'=>'Текст 2']);
 
 ##### Корректные данные #####
 $token_data = [$str_time, $add_data];

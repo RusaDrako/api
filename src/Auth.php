@@ -9,10 +9,8 @@ namespace RusaDrako\api;
  */
 class Auth {
 
-	private $obj_result       = null;
-	private $obj_token        = null;
-	/** @var null Объект класса */
-	private static $_object   = null;
+	private $obj_result;
+	private $obj_token;
 
 	/** */
 	public function __construct($token_key) {
@@ -22,16 +20,6 @@ class Auth {
 
 	/** */
 	public function __destruct() {}
-
-	/** Вызов объекта
-	* @return object Объект класса
-	*/
-	public static function call(...$args) {
-		if (null === self::$_object) {
-			self::$_object = new static(...$args);
-		}
-		return self::$_object;
-	}
 
 	/** Аутентификация по токену
 	 * @param string $token_in Токен подключения

@@ -19,24 +19,12 @@ class Result {
 	private $error_num = null;
 	/** @var null Описание ошибки */
 	private $error_descript = null;
-	/** @var null Объект класса */
-	private static $_object = null;
 
 	/** */
 	public function __construct() {}
 
 	/** */
     public function __destruct() {}
-
-	/** Вызов объекта
-	* @return object Объект класса
-	*/
-	public static function call(...$args) {
-		if (null === self::$_object) {
-			self::$_object = new static(...$args);
-		}
-		return self::$_object;
-	}
 
 	/** Формирует результат ошибки
 	 * @param integer $num Номер ошибки
@@ -62,8 +50,8 @@ class Result {
 			$_result = [
 				'ok' => false,
 				'result' => null,
-				'error' => $this->error_num,
-				'error_desc' => $this->error_description,
+				'errCode' => $this->error_num,
+				'errMessage' => $this->error_description,
 			];
 		} else {
 			$_result = [

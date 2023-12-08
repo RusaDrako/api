@@ -31,13 +31,43 @@ class Result_Test extends TestCase {
 	/** Тестирование error */
 	public function test_error() {
 		$result = $this->_test_object->error(1, 'Тест');
-		$this->assertEquals($result, '{"ok":false,"result":null,"error":"1","error_desc":"\u0422\u0435\u0441\u0442"}');
+		$this->assertEquals($result, '{"ok":false,"result":null,"errCode":"1","errMessage":"\u0422\u0435\u0441\u0442"}');
 	}
 
 	/** Тестирование error */
 	public function test_error_0() {
 		$result = $this->_test_object->error(0, 'Тест');
-		$this->assertEquals($result, '{"ok":false,"result":null,"error":"-999999","error_desc":"\u0422\u0435\u0441\u0442"}');
+		$this->assertEquals($result, '{"ok":false,"result":null,"errCode":"-999999","errMessage":"\u0422\u0435\u0441\u0442"}');
+	}
+
+	/** Тестирование error */
+	public function test_error_null() {
+		$result = $this->_test_object->error(null, 'Тест');
+		$this->assertEquals($result, '{"ok":false,"result":null,"errCode":"-999999","errMessage":"\u0422\u0435\u0441\u0442"}');
+	}
+
+	/** Тестирование error */
+	public function test_error_empty_str() {
+		$result = $this->_test_object->error('', 'Тест');
+		$this->assertEquals($result, '{"ok":false,"result":null,"errCode":"-999999","errMessage":"\u0422\u0435\u0441\u0442"}');
+	}
+
+	/** Тестирование error */
+	public function test_error_false() {
+		$result = $this->_test_object->error(false, 'Тест');
+		$this->assertEquals($result, '{"ok":false,"result":null,"errCode":"-999999","errMessage":"\u0422\u0435\u0441\u0442"}');
+	}
+
+	/** Тестирование error */
+	public function test_error_true() {
+		$result = $this->_test_object->error(true, 'Тест');
+		$this->assertEquals($result, '{"ok":false,"result":null,"errCode":"1","errMessage":"\u0422\u0435\u0441\u0442"}');
+	}
+
+	/** Тестирование error */
+	public function test_error_str() {
+		$result = $this->_test_object->error('Ups!', 'Тест');
+		$this->assertEquals($result, '{"ok":false,"result":null,"errCode":"Ups!","errMessage":"\u0422\u0435\u0441\u0442"}');
 	}
 
 	/** Тестирование формирование json из рекурсивного объекта */
