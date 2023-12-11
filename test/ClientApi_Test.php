@@ -43,7 +43,7 @@ class Auth_Test extends TestCase {
 	}
 
 	/** Генератор токена */
-	public function test_get_token() {
+	public function test__get_token() {
 		$this->real_token($this->_test_object);
 		$result = $this->_test_object->get_token();
 		$this->assertIsObject($result);
@@ -51,12 +51,12 @@ class Auth_Test extends TestCase {
 	}
 
 	/** Контроль токена прошёл */
-	public function test_ok() {
+	public function test__ok() {
 		$this->assertTrue($this->_test_object->auth($this->token), 'Контроль токена прошёл');
 	}
 
 	/** Контроль токена не прошёл */
-	public function test_token_not_equals_101() {
+	public function test__token_not_equals_101() {
 		$this->expectException('RusaDrako\api\ExceptionClientApi');
 		$this->expectExceptionCode(101);
 		$this->expectExceptionMessage('ClientApi: Ошибка токена');
@@ -64,12 +64,12 @@ class Auth_Test extends TestCase {
 	}
 
 	/** Генератор токена */
-	public function test_generate_token() {
+	public function test__generate_token() {
 		$this->assertEquals($this->_test_object->generate_token(), $this->token, 'Возвращает неправильный токен');
 	}
 
 	/** Возврат объекта результата */
-	public function test_get_result() {
+	public function test__get_result() {
 		$result = $this->_test_object->get_result();
 		$this->assertIsObject($result);
 		$this->assertEquals(\get_class($result), 'RusaDrako\api\Result');

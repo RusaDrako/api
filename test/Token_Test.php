@@ -36,13 +36,13 @@ class Token_Test extends TestCase {
 	}
 
 	/** Тестирование ОК */
-	public function test_ok() {
+	public function test__ok() {
 		$token = $this->get_token($this->time, $this->add_data);
 		$this->assertEquals($this->_test_object->generate($this->str_time, $this->add_data), $token, 'Контроль токена не прошёл');
 	}
 
 	/** Ошибка передачи пустого ключа */
-	public function test_not_key_201() {
+	public function test__not_key_201() {
 		$e = false;
 
 		$this->expectException('RusaDrako\api\ExceptionToken');
@@ -52,7 +52,7 @@ class Token_Test extends TestCase {
 	}
 
 	/** Ошибка передачи пустого времени */
-	public function test_not_data_203() {
+	public function test__not_data_203() {
 		$token = $this->get_token($this->time, $this->add_data);
 
 		$this->expectException('RusaDrako\api\ExceptionToken');
@@ -62,7 +62,7 @@ class Token_Test extends TestCase {
 	}
 
 	/** Контроль времени - ОК = + (delta - 10) */
-	public function test_time_plus_delta() {
+	public function test__time_plus_delta() {
 		$time = $this->time + ($this->delta - 10);
 		$str_time = date('Y-m-d H:i:s', $time);
 		$token = $this->get_token($time, $this->add_data);
@@ -71,7 +71,7 @@ class Token_Test extends TestCase {
 	}
 
 	/** Контроль времени - ОК = - (delta - 10) */
-	public function test_time_minus_delta() {
+	public function test__time_minus_delta() {
 		$time = $this->time - ($this->delta - 10);
 		$str_time = date('Y-m-d H:i:s', $time);
 		$token = $this->get_token($time, $this->add_data);
@@ -79,7 +79,7 @@ class Token_Test extends TestCase {
 	}
 
 	/** Контроль времени - Error = - (delta + 10) */
-	public function test_time_plus_delta_202() {
+	public function test__time_plus_delta_202() {
 		$time = $this->time - ($this->delta + 10);
 		$str_time = date('Y-m-d H:i:s', $time);
 		$token = $this->get_token($time, $this->add_data);
@@ -91,7 +91,7 @@ class Token_Test extends TestCase {
 	}
 
 	/** Контроль времени - Error = + (delta + 10) */
-	public function test_time_minus_delta_202() {
+	public function test__time_minus_delta_202() {
 		$time = $this->time + ($this->delta + 10);
 		$str_time = date('Y-m-d H:i:s', $time);
 		$token = $this->get_token($time, $this->add_data);
