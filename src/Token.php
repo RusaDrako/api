@@ -7,7 +7,7 @@ namespace RusaDrako\api;
  * @created 2020-06-01
  * @author Петухов Леонид <rusadrako@yandex.ru>
  */
-class Token implements _int_token {
+class Token implements _inf_token {
 
 	/** Ключ токена */
 	protected $key = null;
@@ -15,11 +15,11 @@ class Token implements _int_token {
 	protected $delta_time = 600;
 
 	/** Генератор токена
-	 * @param array ...$args Произвольный массив данных для формирования токена
+	 * @param string $key Уникальный ключ токена
 	 */
 	public function __construct($key) {
 		$this->key = $key;
-		$this->result = new result();
+		$this->result = new Result();
 	}
 
 	/** */
@@ -63,8 +63,3 @@ class Token implements _int_token {
 
 /**/
 }
-
-/**
- * Класс ошибки
- */
-class ExceptionToken extends \Exception {}

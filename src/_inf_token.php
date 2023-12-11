@@ -5,7 +5,7 @@ namespace RusaDrako\api;
 /**
  * Интерфейс объекта token
  */
-interface _int_token {
+interface _inf_token {
 
 	/** Конструктор класса
 	 * @param string $key Уникальный ключ токена
@@ -19,3 +19,8 @@ interface _int_token {
 
 /**/
 }
+
+/**
+ * Класс ошибки
+ */
+class ExceptionToken extends \Exception {}

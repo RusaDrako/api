@@ -9,7 +9,7 @@ namespace RusaDrako\api;
  */
 class Result {
 
-	use _trait__test;
+	use _trt__test;
 
 	/** @var bool Статус запроса */
 	private $ok = true;

@@ -5,7 +5,7 @@ namespace RusaDrako\api;
 /**
  *
  */
-trait _trait__test {
+trait _trt__test {
 
 	# Маркер тестового режима
 	private $test = false;

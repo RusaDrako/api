@@ -46,7 +46,7 @@ class ClientApi {
 	/** Прописывает объект токена
 	 * @param object $token_obj Объект токена
 	 */
-	public function set_token(_int_token $token_obj) {
+	public function set_token(_inf_token $token_obj) {
 		$this->obj_token = $token_obj;
 	}
 
