@@ -4,8 +4,6 @@ namespace RusaDrako\api;
 
 /**
  * Формирование токена
- * @created 2020-06-01
- * @author Петухов Леонид <rusadrako@yandex.ru>
  */
 class Token implements _inf_token {
 

@@ -3,9 +3,9 @@
 namespace RusaDrako\api;
 
 /**
- * Клиент API
+ * Ауиентификация API
  */
-class ClientApi {
+class Auth {
 
 	private $obj_result;
 	private $obj_token;
@@ -58,5 +58,5 @@ class ClientApi {
 		return $this->obj_result;
 	}
 
-/**/
+	/**/
 }
