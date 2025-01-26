@@ -15,7 +15,7 @@ class Result_Test extends TestCase {
 	/** Вызывается перед каждым запуском тестового метода */
 	protected function setUp() : void {
 		$this->_test_object = new Result();
-		$this->_test_object->test(true);
+//		$this->_test_object->test(true);
 	}
 
 	/** Вызывается после каждого запуска тестового метода */

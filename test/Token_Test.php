@@ -2,6 +2,7 @@
 
 use PHPUnit\Framework\TestCase;
 use RusaDrako\api\Token;
+use RusaDrako\api\TokenException;
 
 require_once(__DIR__ . '/../src/autoload.php');
 
@@ -45,9 +46,9 @@ class Token_Test extends TestCase {
 	public function test__not_key_201() {
 		$e = false;
 
-		$this->expectException('RusaDrako\api\ExceptionToken');
-		$this->expectExceptionCode(201);
-		$this->expectExceptionMessage('ClientApi: Временная точка не найдена');
+		$this->expectException(TokenException::class);
+		$this->expectExceptionCode(TokenException::ERR_201_CODE);
+		$this->expectExceptionMessage(TokenException::ERR_201_TEXT);
 		$this->_test_object->generate(null, $this->add_data);
 	}
 
@@ -55,9 +56,9 @@ class Token_Test extends TestCase {
 	public function test__not_data_203() {
 		$token = $this->get_token($this->time, $this->add_data);
 
-		$this->expectException('RusaDrako\api\ExceptionToken');
-		$this->expectExceptionCode(203);
-		$this->expectExceptionMessage('ClientApi: Контрольное значение не перед');
+		$this->expectException(TokenException::class);
+		$this->expectExceptionCode(TokenException::ERR_203_CODE);
+		$this->expectExceptionMessage(TokenException::ERR_203_TEXT);
 		$this->_test_object->generate($this->str_time, null);
 	}
 
@@ -84,9 +85,9 @@ class Token_Test extends TestCase {
 		$str_time = date('Y-m-d H:i:s', $time);
 		$token = $this->get_token($time, $this->add_data);
 
-		$this->expectException('RusaDrako\api\ExceptionToken');
-		$this->expectExceptionCode(202);
-		$this->expectExceptionMessage('ClientApi: Ограничение токена по времени');
+		$this->expectException(TokenException::class);
+		$this->expectExceptionCode(TokenException::ERR_202_CODE);
+		$this->expectExceptionMessage(TokenException::ERR_202_TEXT);
 		$this->_test_object->generate($str_time, $this->add_data);
 	}
 
@@ -96,9 +97,9 @@ class Token_Test extends TestCase {
 		$str_time = date('Y-m-d H:i:s', $time);
 		$token = $this->get_token($time, $this->add_data);
 
-		$this->expectException('RusaDrako\api\ExceptionToken');
-		$this->expectExceptionCode(202);
-		$this->expectExceptionMessage('ClientApi: Ограничение токена по времени');
+		$this->expectException(TokenException::class);
+		$this->expectExceptionCode(TokenException::ERR_202_CODE);
+		$this->expectExceptionMessage(TokenException::ERR_202_TEXT);
 		$this->_test_object->generate($str_time, $this->add_data);
 	}
 

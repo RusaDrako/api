@@ -2,6 +2,7 @@
 
 use PHPUnit\Framework\TestCase;
 use RusaDrako\api\ClientApi;
+use RusaDrako\api\Result;
 use RusaDrako\api\Token;
 
 require_once(__DIR__ . '/../src/autoload.php');
@@ -57,7 +58,7 @@ class Auth_Test extends TestCase {
 
 	/** Контроль токена не прошёл */
 	public function test__token_not_equals_101() {
-		$this->expectException('RusaDrako\api\ExceptionClientApi');
+		$this->expectException('RusaDrako\api\ClientApiException');
 		$this->expectExceptionCode(101);
 		$this->expectExceptionMessage('ClientApi: Ошибка токена');
 		$this->_test_object->auth($this->token . 1);
@@ -72,7 +73,7 @@ class Auth_Test extends TestCase {
 	public function test__get_result() {
 		$result = $this->_test_object->get_result();
 		$this->assertIsObject($result);
-		$this->assertEquals(\get_class($result), 'RusaDrako\api\Result');
+		$this->assertEquals(\get_class($result), Result::class);
 	}
 
 /**/

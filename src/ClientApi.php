@@ -4,8 +4,6 @@ namespace RusaDrako\api;
 
 /**
  * Клиент API
- * @created 2020-06-01
- * @author Петухов Леонид <rusadrako@yandex.ru>
  */
 class ClientApi {
 
@@ -14,8 +12,8 @@ class ClientApi {
 
 	/** */
 	public function __construct($token_key) {
-		$this->obj_result = new result();
-		$this->obj_token = new token($token_key);
+		$this->set_result(new Result());
+		$this->set_token(new Token($token_key));
 	}
 
 	/** */
@@ -30,7 +28,7 @@ class ClientApi {
 		$token_control = $this->generate_token(...$args);
 		# Если токены не совпадают
 		if ($token_control != $token_in) {
-			throw new ExceptionClientApi("ClientApi: Ошибка токена", 101);
+			throw new ClientApiException(ClientApiException::ERR_101_TEXT, ClientApiException::ERR_101_CODE);
 		}/**/
 		# Ставим маркер подключения
 		return true;
@@ -44,7 +42,7 @@ class ClientApi {
 	}
 
 	/** Прописывает объект токена
-	 * @param object $token_obj Объект токена
+	 * @param _inf_token $token_obj Объект токена
 	 */
 	public function set_token(_inf_token $token_obj) {
 		$this->obj_token = $token_obj;
@@ -55,6 +53,13 @@ class ClientApi {
 		return $this->obj_token;
 	}
 
+	/** Прописывает объект результата
+	 * @param Result $result_obj Объект результата
+	 */
+	public function set_result(Result $result_obj) {
+		$this->obj_result = $result_obj;
+	}
+
 	/** Возвращает объект результата */
 	public function get_result() {
 		return $this->obj_result;
@@ -62,8 +67,3 @@ class ClientApi {
 
 /**/
 }
-
-/**
- * Класс ошибки
- */
-class ExceptionClientApi extends \Exception {}

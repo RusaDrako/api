@@ -105,6 +105,14 @@ $apiClient->set_token($obj_token);
 $obj_token = $apiClient->get_token();
 ```
 
+#### Метод set_result()
+Задаёт новый объект вывода результата.
+```php
+/** @var ClientApi $apiClient */
+$apiClient->set_result($obj_result);
+```
+- **$obj_result** - объект вывода результата наследующий класс `RusaDrako\api\Result`
+
 #### Метод get_result()
 Возвращает объект вывода результата.
 ```php

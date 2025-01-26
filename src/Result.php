@@ -4,21 +4,15 @@ namespace RusaDrako\api;
 
 /**
  * Вывод данных для API
- * @created 2020-06-01
- * @author Петухов Леонид <rusadrako@yandex.ru>
  */
 class Result {
 
-	use _trt__test;
-
-	/** @var bool Статус запроса */
-	private $ok = true;
 	/** @var null Результат запроса */
 	private $result = null;
 	/** @var null Номер ошибки */
 	private $error_num = null;
 	/** @var null Описание ошибки */
-	private $error_descript = null;
+	private $error_description = null;
 
 	/** */
 	public function __construct() {}
@@ -61,12 +55,7 @@ class Result {
 		}
 		# JSON_PARTIAL_OUTPUT_ON_ERROR - Обработка рекурсивных объектов
 		$result = \json_encode($_result, JSON_PARTIAL_OUTPUT_ON_ERROR);
-		if ($this->test) {
-			return $result;
-		} else {
-			echo $result;
-			exit;
-		}
+		return  $result;
 	}
 
 /**/
